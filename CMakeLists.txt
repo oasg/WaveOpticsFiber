@@ -1,8 +1,8 @@
 cmake_minimum_required(VERSION 3.16)
-set (CMAKE_CXX_STANDARD 11)
+set (CMAKE_CXX_STANDARD 14)
 project("Sim")
 
-set(CMAKE_BUILD_TYPE Release)
+# set(CMAKE_BUILD_TYPE Release)
 set(CMAKE_CXX_FLAGS_DEBUG "-g")
 set(CMAKE_CXX_FLAGS_RELEASE "-O3")
 
@@ -16,4 +16,8 @@ include_directories(eigen3)
 add_library(solver MoM_ob.cpp Solver.cpp)
 target_link_libraries(solver)
 add_executable(Sim genDist.cpp)
-target_link_libraries(Sim solver libcomplex_bessel.so)
+
+#link the library libcomplex_bessel
+add_subdirectory(complex_bessel)
+include_directories(complex_bessel/include)
+target_link_libraries(Sim solver complex_bessel::complex_bessel)
